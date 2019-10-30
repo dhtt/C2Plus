@@ -9,8 +9,8 @@ int main() {
     v.push_back(i);
   }
 
-  for (auto i = v.size() - 1; i > 0; --i) {
-    std::cout << i << ": " << v[i] << std::endl;
+  for (auto i = v.size(); i > 0; --i) {
+    std::cout << i << ": " << v[i-1] << std::endl;
   }
   return 0;
 }
