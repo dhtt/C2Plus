@@ -10,7 +10,7 @@ int main() {
   }
 
   for (auto i = v.size(); i > 0; --i) {
-    std::cout << i << ": " << v[i-1] << std::endl;
+    std::cout << i-1 << ": " << v[i-1] << std::endl;
   }
   return 0;
 }
