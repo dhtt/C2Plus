@@ -21,7 +21,6 @@ int log_time_search(vector<string> vs, int start, int end, const string& word){
 }
 
 int main(int argc, char* argv[]) {
-    freopen("temp4.txt","r",stdin);
     string a; vector<string> vs;
     while(getline(cin,a)){
         vs.push_back(a);
