@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
         }
         vvd.push_back(vd);
     }
-    long type = strtol(argv[2], nullptr, 10);
+    long type = strtol(argv[1], nullptr, 10);
 
 
     for (auto & vd : vvd) {
