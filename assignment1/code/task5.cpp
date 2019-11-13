@@ -80,13 +80,12 @@ int main(int argc, char* argv[]) {
 
     long type = strtol(argv[1], nullptr, 10);
 
-
     for (auto & vd : vvd) {
         const vector<double>& row(vd);
         get_result(row, type);
     }
 
-    for (int j = 0; j < vvd.size(); ++j){
+    for (int j = 0; j < vvd.size(); ++j){ //Result for column
         vector<double> col;
         col.reserve(vvd.size());
         for (auto & i : vvd){
@@ -96,15 +95,15 @@ int main(int argc, char* argv[]) {
     }
 
     vector<double> diagonal;
-    diagonal.reserve(vvd.size());
-    for (int i = 0; i < vvd.size(); ++i){
+    diagonal.reserve(vvd.size()); //No of number in diagonal equal no in each row (square matrix)
+    for (int i = 0; i < vvd.size(); ++i){ //Result for diagonal
         diagonal.push_back(vvd[i][i]);
     }
     get_result(diagonal, type);
 
     vector<double> lower_triangle;
     lower_triangle.reserve(vvd.size());
-    for (int i = 1; i < vvd.size(); ++i){
+    for (int i = 1; i < vvd.size(); ++i){ //Result for lower triangle
         for (int j = 0; j < i; ++j){
             lower_triangle.push_back(vvd[i][j]);
         }
