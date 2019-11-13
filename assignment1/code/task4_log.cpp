@@ -12,12 +12,12 @@ void sort(std::vector<string>& v){
 }
 int log_time_search(vector<string> vs, int start, int end, const string& word);
 int log_time_search(vector<string> vs, int start, int end, const string& word){
-    if (start > end) return -1;
+    if (start > end) return -1; //condition to end recursion
 
-    int mid = start + ((end-start)/2);
-    if (vs[mid] == word) {return mid;}
-    else if (vs[mid] > word) {return(log_time_search(vs, start, mid-1 , word));}
-    else {return(log_time_search(vs, mid + 1, end , word));}
+    int mid = start + ((end-start)/2); 
+    if (vs[mid] == word) {return mid;} //if word is found at the middle of vector, return position
+    else if (vs[mid] > word) {return(log_time_search(vs, start, mid-1 , word));} //if word is smaller than middle value, search in first half of vector
+    else {return(log_time_search(vs, mid + 1, end , word));} //if word is larger than middle value, search in second half of vector
 }
 
 int main(int argc, char* argv[]) {
