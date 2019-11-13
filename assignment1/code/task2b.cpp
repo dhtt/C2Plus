@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
 unsigned int& get_max(unsigned int a, unsigned int b);
-unsigned int& get_max(unsigned int a, unsigned int b) {
-  unsigned int *c = a > b ? &a : &b;
-  return *c;
+unsigned int& get_max(unsigned int a, unsigned int b) { //variables pass by reference
+  unsigned int *c = a > b ? &a : &b; //dereference by *
+  return *c; //return dereferenced value
 }
 
 int main() {
