@@ -18,14 +18,14 @@ public:
         seq = std::move(sequence);
     }
 
-    bool check_valid_seq(){
+    bool check_valid_seq(){ 
         istringstream stream_seq(seq); char c; bool check = true;
-        if ((find(seq.begin(), seq.end(), 'U') != seq.end()) && (find(seq.begin(), seq.end(), 'T') != seq.end())){
+        if ((find(seq.begin(), seq.end(), 'U') != seq.end()) && (find(seq.begin(), seq.end(), 'T') != seq.end())){ //if there are both U and T in sequence: invalid 
             check = false;
         }
         else {
             while (stream_seq>>c){
-                if (c != 'A' && c != 'C' && c != 'G' && c != 'U' && c != 'T') {
+                if (c != 'A' && c != 'C' && c != 'G' && c != 'U' && c != 'T') { //if there are bases other than A U T G C: invalid
                     check = false;
                     break;
                 }
@@ -35,7 +35,7 @@ public:
     }
 
     bool check_if_DNA(){
-        if (find(seq.begin(), seq.end(), 'T') != seq.end()) return true;
+        if (find(seq.begin(), seq.end(), 'T') != seq.end()) return true; //if sequence is valid and there is T: is DNA
         else return false;
     }
     void convert_to_RNA(){
@@ -53,10 +53,9 @@ public:
 
 int Sequence::base_count[4]={0};
 
-
 int base_counter(const string& RNA_seq, const char base[4], int base_count[4]);
 int base_counter(const string& RNA_seq, const char base[4], int base_count[4]){
-    for (char i : RNA_seq){
+    for (char i : RNA_seq){ //for each bases in base, increment base_count when base is found in sequence
         if (i == base[0]) ++base_count[0];
         else if (i == base[1]) ++base_count[1];
         else if (i == base[2]) ++base_count[2];
