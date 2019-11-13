@@ -8,7 +8,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     string a; vector<string> va;
-    while(getline(cin,a)){
+    while(getline(cin,a)){ //store lines in vector va
         va.push_back(a);
     }
     for (int i=1; i<argc; ++i) {
