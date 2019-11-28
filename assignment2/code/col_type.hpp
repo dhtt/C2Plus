@@ -57,37 +57,26 @@ public:
     template <typename ValueType>
     explicit ColType(const ValueType& value): container(std::make_unique<DataType<ValueType>>(value)){}
     ColType(const ColType& other): container(other.container -> clone()){}
-    ColType& operator=(const ColType& other);
-    GenericDataType& get();
-    const GenericDataType& get() const;
-    bool operator==(const ColType& other) const;
-    bool operator<(const ColType& other) const;
+    ColType& operator=(const ColType& other){
+        container = other.container -> clone();
+        return *this;
+    }
+    GenericDataType& get(){
+        return *container;
+    }
+    const GenericDataType& get() const {
+        return *container;
+    }
+    bool operator==(const ColType& other) const {
+        return (container == other.container);
+    }
+    bool operator<(const ColType& other) const {
+        return (container < other.container);
+    }
     ~ColType() {container = nullptr;}
 
 private:
     std::unique_ptr<GenericDataType> container;
 };
-
-ColType &ColType::operator=(const ColType &other) {
-    container = other.container -> clone();
-    return *this;
-}
-
-bool ColType::operator==(const ColType &other) const {
-    return (container == other.container);
-}
-
-bool ColType::operator<(const ColType &other) const {
-    return (container < other.container);
-}
-
-GenericDataType &ColType::get() {
-    return *container;
-}
-
-const GenericDataType &ColType::get() const {
-    return *container;
-}
-
 
 #endif //ASSIGNMENT2_COLTYPE_HPP
