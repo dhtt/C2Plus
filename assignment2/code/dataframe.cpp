@@ -1,4 +1,5 @@
 #include "dataframe.hpp"
+#include <set>
 
 //4a
 size_t Dataframe::nrows() const {
@@ -14,16 +15,20 @@ size_t Dataframe::ncols() const {
 }
 
 
-
-
 //7a TODO: name vector has to be of the same size as nrow and ncol
 void Dataframe::set_colnames(const std::vector<std::string>& v_colnames){
+    std::set<std::string> s(v_colnames.begin(), v_colnames.end());
+    if (s.size() != v_colnames.size()) throw std::exception();
+
     for (const auto & v_colname : v_colnames){
         colnames.push_back(v_colname);
     }
 }
 //7b
 void Dataframe::set_rownames(const std::vector<std::string>& v_rownames){
+    std::set<std::string> s(v_rownames.begin(), v_rownames.end());
+    if (s.size() != v_rownames.size()) throw std::exception();
+
     for (const auto & v_rowname : v_rownames){
         rownames.push_back(v_rowname);
     }
@@ -61,6 +66,8 @@ void Dataframe::remove_column(const size_t i){
 //11b
 void Dataframe::remove_column(const std::string& col_name){
     if (find(colnames.begin(), colnames.end(), col_name) == colnames.end()) throw Invalid::NameNotFound();
+    if (!has_colnames()) throw Invalid::NoColRowName();
+
     int index = find(colnames.begin(), colnames.end(), col_name) - colnames.begin();
 
     auto it = data.begin();
