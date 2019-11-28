@@ -61,7 +61,7 @@ public:
     //5
     template <typename T>
     T& get(size_t i, size_t j){
-        if (i > nrows() || j > ncols()) throw std::out_of_range("Index out of range.");
+        if (i >= nrows() || j >= ncols() || i < 0 || j < 0) throw std::out_of_range("Index out of range.");
 
         auto it = data.begin();
         std::advance(it, j);
