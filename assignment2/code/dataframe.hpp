@@ -47,6 +47,20 @@ public:
     Dataframe(): data(), colnames(), rownames() {}
 
     Dataframe(const Dataframe& other): data(other.data), colnames(other.colnames), rownames(other.rownames) {}
+    Dataframe& operator=(const Dataframe& other){
+        data = other.data;
+        colnames = other.colnames;
+        rownames = other.rownames;
+        return *this;
+    }
+
+    Dataframe(Dataframe&& other): data(std::move(other.data)), colnames(std::move(other.colnames)), rownames(std::move(other.rownames)) {}
+    Dataframe& operator=(Dataframe&& other){
+        data = std::move(other.data);
+        colnames = std::move(other.colnames);
+        rownames = std::move(other.rownames);
+        return *this;
+    }
 
     ~Dataframe(){
         colnames.clear();
@@ -99,7 +113,7 @@ public:
     //10
     template <typename T>
     void add_column(std::vector<T> col) {
-        if ((col.size() != nrows()) && (nrows() != 0)) throw std::exception();
+        if ((col.size() != nrows()) && (nrows() != 0)) throw std::exception(); //New column has different size
 
         std::vector<ColType> v_coltype;
         for (int i = 0; i < col.size(); ++i){
@@ -169,17 +183,17 @@ private:
     std::vector<std::string> colnames;
     std::vector<std::string> rownames;
 
-   template<typename T>
-   T& get_orig_type_(ColType& ct){
-       auto& val = dynamic_cast<DataType<typename std::remove_reference_t<T>>&>(ct.get());
-       return val.get_value();
-   }
+    template<typename T>
+    T& get_orig_type_(ColType& ct){
+        auto& val = dynamic_cast<DataType<typename std::remove_reference_t<T>>&>(ct.get());
+        return val.get_value();
+    }
 
-   template<typename T>
-   const T& get_orig_type_(const ColType& ct) const {
-       const auto& val = dynamic_cast<const DataType<typename std::remove_reference_t<T>>&>(ct.get());
-       return val.get_value();
-   }
+    template<typename T>
+    const T& get_orig_type_(const ColType& ct) const {
+        const auto& val = dynamic_cast<const DataType<typename std::remove_reference_t<T>>&>(ct.get());
+        return val.get_value();
+    }
 };
 
 #endif //ASSIGNMENT2_DATAFRAME_HPP
