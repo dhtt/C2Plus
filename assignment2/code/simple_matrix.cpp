@@ -42,11 +42,11 @@ std::size_t SimpleMatrix::ncols() const {
 }
 
 double &SimpleMatrix::operator()(std::size_t i, std::size_t j) {
-    if (i > nrows() || j > ncols()) throw std::out_of_range("Index out of range")
+    if (i > nrows() || j > ncols()) throw std::out_of_range("Index out of range");
     return data_[i][j];
 }
 
 double SimpleMatrix::operator()(std::size_t i, std::size_t j) const {
-    if (i > nrows() || j > ncols()) throw std::out_of_range("Index out of range")
+    if (i > nrows() || j > ncols()) throw std::out_of_range("Index out of range");
     return data_[i][j];
 }
