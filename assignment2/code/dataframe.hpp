@@ -21,10 +21,10 @@ template<typename Ret, typename F, typename Arg, typename... Rest>
 Arg first_argument_helper(Ret(F::*) (Arg, Rest...) const);
 
 template <typename F>
-decltype(first_argument_helper(&F::operator())) first_argument_helper(F); //first_argument_helper(F) will have type of first_argument_helper(&F::operator())
+decltype(first_argument_helper(&F::operator())) first_argument_helper(F);
 
 template <typename T>
-using first_argument_t = decltype(first_argument_helper(std::declval<T>())); //first_argument_helper(F) will have type std::declval<T>()
+using first_argument_t = decltype(first_argument_helper(std::declval<T>()));
 
 
 class Dataframe {
@@ -32,17 +32,18 @@ public:
     class Invalid{
     public:
         struct NameNotFound : public std::exception {
-            const char * what () const noexcept {
+            const char * what () const throw () {
                 return "Error: Row or Column name not found!";
             }
         };
 
         struct NoColRowName : public std::exception {
-            const char * what () const noexcept {
+            const char * what () const throw () {
                 return "Error: Dataframe has no column name and/or row name.";
             }
         };
     };
+
     Dataframe(): data(), colnames(), rownames() {}
 
     Dataframe(const Dataframe& other): data(other.data), colnames(other.colnames), rownames(other.rownames) {}
@@ -54,76 +55,47 @@ public:
     }
 
     //4a
-    size_t nrows() const {
-        auto it = data.begin();
-        std::advance(it, 0);
-        std::vector<ColType> vct = *it;
-        return vct.size();
-    }
+    size_t nrows() const;
     //4b
-    size_t ncols() const {
-        return data.size();
-    }
-
+    size_t ncols() const;
     //5
     template <typename T>
     T& get(size_t i, size_t j){
-        if (i > nrows() || j > ncols()) throw std::out_of_range("Index out of range.");
+        if (i >= nrows() || j >= ncols() || i < 0 || j < 0) throw std::out_of_range("Index out of range.");
 
         auto it = data.begin();
         std::advance(it, j);
         std::vector<ColType> &v_coltype = *it; //access column j
-        ColType coltype = v_coltype[i]; //access item i of column j
+        ColType& coltype = v_coltype[i]; //access item i of column j
         T &ct = get_orig_type_<T>(coltype);
         return ct;
     }
     //6
     template <typename T>
-    T get(const std::string& r, const std::string& c){
+    T& get(const std::string& r, const std::string& c){
         if (!has_rownames() || !has_colnames()) throw Invalid::NoColRowName();
         if (find(colnames.begin(), colnames.end(), c) == colnames.end() || find(rownames.begin(), rownames.end(), r) == rownames.end()) throw Invalid::NameNotFound();
 
-        int j = find(colnames.begin(), colnames.end(), c) - colnames.begin(); //get index of column by name
+        int j = find(colnames.begin(), colnames.end(), c) - colnames.begin();
         int i = find(rownames.begin(), rownames.end(), r) - rownames.begin();
 
-        auto it = data.begin();
-        std::advance(it, j);
-        std::vector<ColType> &v_coltype = *it;//access column j
-        ColType coltype = v_coltype[i]; //access item i of column j
-        T &ct = get_orig_type_<T>(coltype);
-        return ct;
+        return get<T>(i, j);
     }
 
     //7a TODO: name vector has to be of the same size as nrow and ncol
-    void set_colnames(const std::vector<std::string>& v_colnames){
-        for (const auto & v_colname : v_colnames){
-            colnames.push_back(v_colname);
-        }
-    }
+    void set_colnames(const std::vector<std::string>& v_colnames);
     //7b
-    void set_rownames(const std::vector<std::string>& v_rownames){
-        for (const auto & v_rowname : v_rownames){
-            rownames.push_back(v_rowname);
-        }
-    }
+    void set_rownames(const std::vector<std::string>& v_rownames);
 
     //8a
-    void clear_colnames(){
-        colnames.clear();
-    }
+    void clear_colnames();
     //8b
-    void clear_rownames(){
-        rownames.clear();
-    }
+    void clear_rownames();
 
     //9a
-    bool has_colnames() const {
-        return !colnames.empty();
-    }
+    bool has_colnames() const;
     //9b
-    bool has_rownames() const {
-        return !rownames.empty();
-    }
+    bool has_rownames() const;
 
     //10
     template <typename T>
@@ -137,64 +109,19 @@ public:
     }
 
     //11a
-    void remove_column(const size_t i){
-        if (i > ncols()) throw std::out_of_range("Index out of range.");
-
-        auto it = data.begin();
-        std::advance(it, i);
-        data.erase(it);
-        colnames.erase(colnames.begin() + i);
-    }
+    void remove_column(const size_t i);
     //11b
-    void remove_column(const std::string& col_name){
-        if (find(colnames.begin(), colnames.end(), col_name) == colnames.end()) throw Invalid::NameNotFound();
-        int index = find(colnames.begin(), colnames.end(), col_name) - colnames.begin(); //get index of column by name
-
-        auto it = data.begin();
-        std::advance(it, index);
-        data.erase(it);
-        colnames.erase(colnames.begin() + index);
-    }
+    void remove_column(const std::string& col_name);
 
     //12a
-    void swap_columns(const size_t i, const size_t j) {
-        if (i > ncols() || j > ncols()) throw std::out_of_range("Index out of range.");
-
-        auto it1 = data.begin();
-        std::advance(it1, i);
-        std::vector<ColType> &v_coltype1 = *it1; //first column
-
-        auto it2 = data.begin();
-        std::advance(it2, j);
-        std::vector<ColType> &v_coltype2 = *it2;//second column
-
-        v_coltype1.swap(v_coltype2);
-        colnames[i].swap(colnames[j]);
-    }
+    void swap_columns(const size_t i, const size_t j);
     //12b
-    void swap_columns(const std::string& column1, const std::string& column2) {
-        if (!has_colnames()) throw Invalid::NoColRowName();
-        if (find(colnames.begin(), colnames.end(), column1) == colnames.end() || find(colnames.begin(), colnames.end(), column2) == colnames.end()) throw Invalid::NameNotFound();
-
-        int i = find(colnames.begin(), colnames.end(), column1) - colnames.begin(); //get index of column by name
-        int j = find(colnames.begin(), colnames.end(), column2) - colnames.begin();
-
-        auto it1 = data.begin();
-        std::advance(it1, i);
-        std::vector<ColType> &v_coltype1 = *it1; //first column
-
-        auto it2 = data.begin();
-        std::advance(it2, j);
-        std::vector<ColType> &v_coltype2 = *it2; //second column
-
-        v_coltype1.swap(v_coltype2);
-        colnames[i].swap(colnames[j]);
-    }
+    void swap_columns(const std::string& column1, const std::string& column2);
 
     //13a
     template<typename Fun>
     void apply(const size_t i, Fun l) {
-        if (i > ncols()) throw std::out_of_range("Index out of range.");
+        if (i >= ncols()) throw std::out_of_range("Index out of range.");
 
         auto it = data.begin();
         std::advance(it, i);
@@ -225,105 +152,33 @@ public:
     void order_by(const std::string c) {}
 
     //15
-    friend std::ostream& operator<<(std::ostream& os, const Dataframe& df){
-        std::vector<std::vector<ColType>> vv_coltype;
-        for (size_t j = 0; j < df.ncols(); ++j){
-            std::vector<ColType> v_coltype;
-            for (size_t i = 0; i < df.nrows(); ++i){
-                const ColType &coltype = df.at(i,j);
-                v_coltype.push_back(coltype);
-            }
-            vv_coltype.push_back(v_coltype);
-        }
-
-        if (df.has_colnames() && df.has_rownames()){ //print col name and row name
-            for (const auto& c:df.colnames) os << "\t" << c;
-            os << std::endl;
-        }
-        else if (df.has_colnames() && !df.has_rownames()){ //print col name only
-            for (const auto& c:df.colnames) os << c;
-            os << std::endl;
-        }
-
-        if (df.has_rownames()){ //print row name
-            for (size_t j = 0; j < df.nrows(); ++j){
-                os << df.rownames[j] << "\t";
-                for (size_t i = 0; i < vv_coltype.size(); ++i){
-                    ColType &ct = vv_coltype[i][j];
-                    os << ct.get() << "\t" ;
-                }
-                os << std::endl;
-            }
-        }
-        else { //else print just the data
-            for (size_t j = 0; j < df.nrows(); ++j){
-                for (size_t i = 0; i < vv_coltype.size(); ++i){
-                    ColType &ct = vv_coltype[i][j];
-                    os << ct.get() << "\t" ;
-                }
-                os << std::endl;
-            }
-        }
-        return os;
-    }
+    friend std::ostream& operator<<(std::ostream& os, const Dataframe& df);
 
     //16a
-    bool operator==(const Dataframe& other) const{
-        if (nrows()!=other.nrows() && ncols()!=other.ncols()) return false;
-        bool b = true;
-        for (size_t j = 0; j < ncols(); ++j){
-            for (size_t i = 0; i < nrows(); ++i){
-                if (!(this->at(i,j).get() == other.at(i,j).get())){
-                    b = false;
-                    break;
-                }
-            }
-        }
-        return b;
-    }
+    bool operator==(const Dataframe& other) const;
     //16b
-    bool operator!=(const Dataframe& other) const{
-        bool b = true;
-        for (size_t j = 0; j < ncols(); ++j){
-            for (size_t i = 0; i < nrows(); ++i){
-                if (this->at(i,j).get() == other.at(i,j).get()){
-                    b = false;
-                    break;
-                }
-            }
-        }
-        return b;
-    }
+    bool operator!=(const Dataframe& other) const;
 
 
     //Other
-    ColType at(size_t i, size_t j) const { //get access to ColType object in dataframe
-        auto it = data.begin();
-        std::advance(it, j);
-        std::vector<ColType> v_coltype = *it;
-        ColType coltype = v_coltype[i];
-        return coltype;
-    }
-
+    ColType at(size_t i, size_t j) const;
 
 private:
-
     std::list<std::vector<ColType>> data;
     std::vector<std::string> colnames;
     std::vector<std::string> rownames;
 
-    template<typename T>
-    T& get_orig_type_(ColType& ct){
-        auto& val = dynamic_cast<DataType<typename std::remove_reference_t<T>>&>(ct.get());
-        return val.get_value();
-    }
+   template<typename T>
+   T& get_orig_type_(ColType& ct){
+       auto& val = dynamic_cast<DataType<typename std::remove_reference_t<T>>&>(ct.get());
+       return val.get_value();
+   }
 
-    template<typename T>
-    const T& get_orig_type_(const ColType& ct) const {
-        const auto& val = dynamic_cast<const DataType<typename std::remove_reference_t<T>>&>(ct.get());
-        return val.get_value();
-    }
+   template<typename T>
+   const T& get_orig_type_(const ColType& ct) const {
+       const auto& val = dynamic_cast<const DataType<typename std::remove_reference_t<T>>&>(ct.get());
+       return val.get_value();
+   }
 };
-
 
 #endif //ASSIGNMENT2_DATAFRAME_HPP
