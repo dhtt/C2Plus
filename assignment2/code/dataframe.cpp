@@ -15,10 +15,10 @@ size_t Dataframe::ncols() const {
 }
 
 
-//7a TODO: name vector has to be of the same size as nrow and ncol
+//7a
 void Dataframe::set_colnames(const std::vector<std::string>& v_colnames){
     std::set<std::string> s(v_colnames.begin(), v_colnames.end());
-    if (s.size() != v_colnames.size()) throw std::exception();
+    if (s.size() != v_colnames.size()) throw std::exception(); //Col name is not unique
 
     for (const auto & v_colname : v_colnames){
         colnames.push_back(v_colname);
@@ -27,7 +27,7 @@ void Dataframe::set_colnames(const std::vector<std::string>& v_colnames){
 //7b
 void Dataframe::set_rownames(const std::vector<std::string>& v_rownames){
     std::set<std::string> s(v_rownames.begin(), v_rownames.end());
-    if (s.size() != v_rownames.size()) throw std::exception();
+    if (s.size() != v_rownames.size()) throw std::exception();//Row name is not unique
 
     for (const auto & v_rowname : v_rownames){
         rownames.push_back(v_rowname);
@@ -197,3 +197,4 @@ ColType Dataframe::at(size_t i, size_t j) const {
     ColType coltype = v_coltype[i];
     return coltype;
 }
+
