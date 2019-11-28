@@ -11,6 +11,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const GenericDataType& v);
     virtual bool operator==(const GenericDataType& other) const = 0;
     virtual bool operator<(const GenericDataType& other) const = 0;
+
 protected:
     virtual void print(std::ostream& os) const = 0;
 };
@@ -25,9 +26,9 @@ template <typename T>
 class DataType: public GenericDataType{
 public:
     T value_;
-    DataType():value_(0) {};
+    DataType():value_(0) {}
     ~DataType() override = default;
-    explicit DataType(T const& value): value_(value){};
+    explicit DataType(T const& value): value_(value){}
     std::unique_ptr<GenericDataType> clone() const override {
         return std::make_unique<DataType>(*this);
     }
@@ -39,7 +40,7 @@ public:
     bool operator<(const GenericDataType& other) const override {
         const auto *o = dynamic_cast<const DataType*>(&other);
         return (value_ < o->value_);
-    };
+    }
 
     T& get_value(){
         return value_;
@@ -47,38 +48,35 @@ public:
 protected:
     void print(std::ostream& os) const override {
         os << value_;
-    };
+    }
 };
+
 
 class ColType {
 public:
     template <typename ValueType>
     explicit ColType(const ValueType& value): container(std::make_unique<DataType<ValueType>>(value)){}
-    ColType(const ColType& other): container(other.container -> clone()){};
-    
-    ColType& operator=(const ColType &other) {
+    ColType(const ColType& other): container(other.container -> clone()){}
+    ColType& operator=(const ColType& other){
         container = other.container -> clone();
         return *this;
     }
-    
-    bool operator==(const ColType &other) const {
+    GenericDataType& get(){
+        return *container;
+    }
+    const GenericDataType& get() const {
+        return *container;
+    }
+    bool operator==(const ColType& other) const {
         return (container == other.container);
     }
-
-    bool operator<(const ColType &other) const {
+    bool operator<(const ColType& other) const {
         return (container < other.container);
     }
+    ~ColType() {container = nullptr;}
 
-    GenericDataType &get() {
-        return *container;
-    }
-
-    const GenericDataType &get() const {
-        return *container;
-    }
 private:
     std::unique_ptr<GenericDataType> container;
 };
-
 
 #endif //ASSIGNMENT2_COLTYPE_HPP
