@@ -70,9 +70,31 @@ public:
         T &ct = get_orig_type_<T>(coltype);
         return ct;
     }
+
+    template <typename T>
+    T get(size_t i, size_t j) const{
+        if (i >= nrows() || j >= ncols() || i < 0 || j < 0) throw std::out_of_range("Index out of range.");
+
+        auto it = data.begin();
+        std::advance(it, j);
+        std::vector<ColType> &v_coltype = *it; //access column j
+        ColType& coltype = v_coltype[i]; //access item i of column j
+        T &ct = get_orig_type_<T>(coltype);
+        return ct;
+    }
     //6
     template <typename T>
     T& get(const std::string& r, const std::string& c){
+        if (!has_rownames() || !has_colnames()) throw Invalid::NoColRowName();
+        if (find(colnames.begin(), colnames.end(), c) == colnames.end() || find(rownames.begin(), rownames.end(), r) == rownames.end()) throw Invalid::NameNotFound();
+
+        int j = find(colnames.begin(), colnames.end(), c) - colnames.begin();
+        int i = find(rownames.begin(), rownames.end(), r) - rownames.begin();
+
+        return get<T>(i, j);
+    }
+    template <typename T>
+    T get(const std::string& r, const std::string& c) const{
         if (!has_rownames() || !has_colnames()) throw Invalid::NoColRowName();
         if (find(colnames.begin(), colnames.end(), c) == colnames.end() || find(rownames.begin(), rownames.end(), r) == rownames.end()) throw Invalid::NameNotFound();
 
