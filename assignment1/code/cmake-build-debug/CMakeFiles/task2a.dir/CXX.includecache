@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/dhthutrang/Documents/BIOINFO/Programmierung/Assignment/1/assignment1/code/task2a.cpp
+iostream
+-
+vector
+-
+
