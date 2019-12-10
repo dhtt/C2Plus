@@ -14,7 +14,7 @@ static double get_sd(vector<double> V){
     double mean = get_mean(V);
     transform(V.begin(), V.end(), mean_diff.begin(), [mean](double d){ return d - mean;});
     double square_sum = std::inner_product(mean_diff.begin(), mean_diff.end(), mean_diff.begin(), 0.0); //TODO check
-    return sqrt(square_sum / V.size());
+    return sqrt(square_sum / (V.size()-1));
 }
 static vector<double> scale_vector(vector<double> V){
     vector<double> V1_scaled(V.size());
