@@ -12,14 +12,14 @@ static vector<string> all_result; //all_result stores all printed line -> no dup
 static void match_regex(const string& s, const regex& r, bool non_matching, bool line_number, size_t n_line){
     if (non_matching){ //Display non-matches
         if (!regex_search(s, r) && find(all_result.begin(), all_result.end(), s) == all_result.end()) {
-            if (line_number) cout << n_line << ":"; //Display matches with line number
+            if (line_number) cout << n_line + 1 << ":"; //Display matches with line number
             cout << s << endl;
             all_result.push_back(s);
         }
     }
     else { //Display matches
         if (regex_search(s, r) && find(all_result.begin(), all_result.end(), s) == all_result.end()) {
-            if (line_number) cout << n_line << ":"; //Display matches with line number
+            if (line_number) cout << n_line + 1 << ":"; //Display matches with line number
             cout << s << endl;
             all_result.push_back(s);
         }
