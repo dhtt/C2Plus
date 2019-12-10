@@ -81,24 +81,19 @@ int main(int argc, char* argv[]) {//TODO add exit error
     unsigned n = static_cast<unsigned int>(atoi(argv[1]));
     unsigned m = static_cast<unsigned int>(atoi(argv[2]));
     unsigned s = static_cast<unsigned int>(atoi(argv[3]));
-
     double p = strtod(argv[4], nullptr);
-
     unsigned k = static_cast<unsigned int>(atoi(argv[5]));
-    negative_binomial_distribution<int> distribution(k, p);
-    mt19937_64 mt_generator1 (s); mt19937_64 mt_generator2 (s*2);
-    auto gen1 = [&distribution, &mt_generator1](){return distribution(mt_generator1);};
-    auto gen2 = [&distribution, &mt_generator2](){return distribution(mt_generator2);};
+    negative_binomial_distribution<int> distribution1(k, p);
+    negative_binomial_distribution<int> distribution2(k, p);
+    mt19937_64 mt_generator(s);
+    auto gen1 = [&distribution1, &mt_generator](){return distribution1(mt_generator);};
+    auto gen2 = [&distribution2, &mt_generator](){return distribution2(mt_generator);};
 
     vector<double> V1(n);
     generate(V1.begin(), V1.end(), gen1);
-    for (auto& i:V1){cout << i<< "\t";}
-    cout <<endl;
-
+    mt_generator.seed(s*2);
     vector<double> V2(m);
     generate(V2.begin(), V2.end(), gen2);
-    for (auto& i:V2){cout << i<< "\t";}
-    cout <<endl;
 
     cout << "V1 Mean: " << setprecision(3) << get_mean(V1) << endl;
     cout << "V1 Sample standard deviation: " << setprecision(3) << get_sd(V1) << endl;
