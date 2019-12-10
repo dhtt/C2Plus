@@ -73,31 +73,32 @@ static void sort_special(vector<double>& V){
 }
 
 int main(int argc, char* argv[]) {//TODO add exit error
-//    if (argc != 5) {
-//        printf("Please give 5 argument: n, m, s (unsigned int), p (double) and k (unsigned int).\n");
-//        return EXIT_FAILURE;
-//    }
-//
-//    unsigned n = static_cast<unsigned int>(atoi(argv[1]));
-//    unsigned m = static_cast<unsigned int>(atoi(argv[2]));
-//    unsigned s = static_cast<unsigned int>(atoi(argv[3]));
-//    double p = atoi(argv[4]);
-//    unsigned k = static_cast<unsigned int>(atoi(argv[5]));
-    unsigned n = 5;
-    unsigned m = 8;
-    unsigned s = 42;
-    double p = 0.5;
-    unsigned k = 10;
+    if (argc != 6) {
+        printf("Please give 5 argument: n, m, s (unsigned int), p (double) and k (unsigned int).\n");
+        exit(1);
+    }
 
-    negative_binomial_distribution<int> distribution(k, p); //TODO check if use another
+    unsigned n = static_cast<unsigned int>(atoi(argv[1]));
+    unsigned m = static_cast<unsigned int>(atoi(argv[2]));
+    unsigned s = static_cast<unsigned int>(atoi(argv[3]));
+
+    double p = strtod(argv[4], nullptr);
+
+    unsigned k = static_cast<unsigned int>(atoi(argv[5]));
+    negative_binomial_distribution<int> distribution(k, p);
     mt19937_64 mt_generator1 (s); mt19937_64 mt_generator2 (s*2);
     auto gen1 = [&distribution, &mt_generator1](){return distribution(mt_generator1);};
     auto gen2 = [&distribution, &mt_generator2](){return distribution(mt_generator2);};
 
     vector<double> V1(n);
     generate(V1.begin(), V1.end(), gen1);
+    for (auto& i:V1){cout << i<< "\t";}
+    cout <<endl;
+
     vector<double> V2(m);
     generate(V2.begin(), V2.end(), gen2);
+    for (auto& i:V2){cout << i<< "\t";}
+    cout <<endl;
 
     cout << "V1 Mean: " << setprecision(3) << get_mean(V1) << endl;
     cout << "V1 Sample standard deviation: " << setprecision(3) << get_sd(V1) << endl;
