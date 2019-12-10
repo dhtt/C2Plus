@@ -12,6 +12,7 @@ static vector<string> all_result; //all_result stores all printed line -> no dup
 static void match_regex(const string& s, const regex& r, bool non_matching, bool line_number, size_t n_line){
     if (non_matching){ //Display non-matches
         if (!regex_search(s, r) && find(all_result.begin(), all_result.end(), s) == all_result.end()) {
+            if (line_number) cout << n_line << ":"; //Display matches with line number
             cout << s << endl;
             all_result.push_back(s);
         }
@@ -116,13 +117,8 @@ int main(int argc, char* argv[]) {
             line_number = true;
         }
 
-        if (result.count("n") && result.count("v")) throw invalid_argument("Can only print line number where matches occur.");
     }
     catch (const cxxopts::OptionException& e){
-        cout << "Error parsing options: " << e.what() << endl;
-        exit(1);
-    }
-    catch (const invalid_argument& e){
         cout << "Error parsing options: " << e.what() << endl;
         exit(1);
     }
