@@ -3,9 +3,12 @@
 #include <stdexcept>
 #include <fstream>
 #include <vector>
+
 using namespace std;
 using namespace std::regex_constants;
+
 static vector<string> all_result; //all_result stores all printed line -> no duplicates
+
 static void match_regex(const string& s, const regex& r, bool non_matching, bool line_number, size_t n_line){
     if (non_matching){ //Display non-matches
         if (!regex_search(s, r) && find(all_result.begin(), all_result.end(), s) == all_result.end()) {
@@ -21,6 +24,7 @@ static void match_regex(const string& s, const regex& r, bool non_matching, bool
         }
     }
 }
+
 static string read_raw_string(string& p){ //preprocess pattern
     regex special_chars1 (R"([-[\]{}()*+?.,\^$|#\t])"); //read common special characters
     regex special_chars2 (R"(\\+[abfnrtv])"); //read \_t \_n \_r etc...
@@ -28,6 +32,7 @@ static string read_raw_string(string& p){ //preprocess pattern
     p = regex_replace(p, special_chars2, R"(\$&)");
     return p;
 }
+
 static regex make_regex(string& p, bool fixed_string, bool whole_word, bool i_case){
     if (fixed_string){ //Read raw string literal
         p = read_raw_string(p);
