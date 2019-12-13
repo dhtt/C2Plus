@@ -115,12 +115,12 @@ int main(int argc, char* argv[]) {//TODO add exit error
     vector<double> V3 = generate_seqvector(n, s*7);
     transform(V1_scaled.begin(), V1_scaled.end(), V3.begin(),  V3.begin(),multiplies<>() );
     sort_special(V3);
-    print_vector(V3, "V3", 2);
+    //print_vector(V3, "V3", 2);
     
-    
-    vector<double> V(vec_size);
+     mt_generator.seed(s*7);
+    vector<double> V(n);
     iota(V.begin(), V.end(), 1);
-    shuffle(V.begin(), V.end(), mt_generator(s*7));
+    shuffle(V.begin(), V.end(), mt_generator);
     transform(V1_scaled.begin(), V1_scaled.end(), V.begin(),  V.begin(),multiplies<>() );
     sort_special(V);
     print_vector(V, "V", 2);
