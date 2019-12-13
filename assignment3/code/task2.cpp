@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {//TODO add exit error
     
     vector<double> V(vec_size);
     iota(V.begin(), V.end(), 1);
-    shuffle(V.begin(), V.end(), mt_generator(seed*7));
+    shuffle(V.begin(), V.end(), mt_generator(s*7));
     transform(V1_scaled.begin(), V1_scaled.end(), V.begin(),  V.begin(),multiplies<>() );
     sort_special(V);
     print_vector(V, "V", 2);
