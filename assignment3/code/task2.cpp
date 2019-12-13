@@ -9,19 +9,22 @@ using namespace std;
 static double get_mean(vector<double> V){
     return accumulate(V.begin(), V.end(), 0.0)/V.size();
 }
+
 static double get_sd(vector<double> V){
     vector<double> mean_diff(V.size());
     double mean = get_mean(V);
     transform(V.begin(), V.end(), mean_diff.begin(), [mean](double d){ return d - mean;});
-    double square_sum = std::inner_product(mean_diff.begin(), mean_diff.end(), mean_diff.begin(), 0.0); //TODO check
+    double square_sum = std::inner_product(mean_diff.begin(), mean_diff.end(), mean_diff.begin(), 0.0);
     return sqrt(square_sum / (V.size()-1));
 }
+
 static vector<double> scale_vector(vector<double> V){
     vector<double> V1_scaled(V.size());
     transform(V.begin(), V.end(), V1_scaled.begin(), [](double d){ return log2(abs(d) + 1);});
     return V1_scaled;
 }
-void print_vector(vector<double> V, const string& V_name, int print_type){ //print 2 first vectors
+
+static void print_vector(vector<double> V, const string& V_name, int print_type){ //print 2 first vectors
     string separator = "";
     if (print_type == 1) {
         sort(V.rbegin(), V.rend());
@@ -44,15 +47,17 @@ void print_vector(vector<double> V, const string& V_name, int print_type){ //pri
         cout << endl;
     }
 }
+
 static double t_test(const vector<double>& V1_, const vector<double>& V2_){
     double mean1 = get_mean(V1_); double mean2 = get_mean(V2_);
     double sd1 = get_sd(V1_); double sd2 = get_sd(V2_);
     double n1 = V1_.size(); double n2 = V2_.size();
 
-    double sd_pooled = sqrt(((n1-1)*sd1*sd1 + (n2-1)*sd2*sd2)/(n1+n2-2));//TODO: check calculation
+    double sd_pooled = sqrt(((n1-1)*sd1*sd1 + (n2-1)*sd2*sd2)/(n1+n2-2));
     double t_score = (mean1 - mean2)/(sd_pooled*sqrt(1/n1 + 1/n2));
     return t_score;
 }
+
 static vector<double> generate_seqvector(unsigned vec_size, unsigned seed){
     mt19937_64 mt_generator(seed);
     vector<double> V(vec_size);
@@ -72,7 +77,7 @@ static void sort_special(vector<double>& V){
     sort(V.begin(), it, [](double d1, double d2){ return d1> d2; }); //sort even part in descending order
 }
 
-int main(int argc, char* argv[]) {//TODO add exit error
+int main(int argc, char* argv[]) {
     if (argc != 6) {
         printf("Please give 5 argument: n, m, s (unsigned int), p (double) and k (unsigned int).\n");
         exit(1);
@@ -115,15 +120,7 @@ int main(int argc, char* argv[]) {//TODO add exit error
     vector<double> V3 = generate_seqvector(n, s*7);
     transform(V1_scaled.begin(), V1_scaled.end(), V3.begin(),  V3.begin(),multiplies<>() );
     sort_special(V3);
-    //print_vector(V3, "V3", 2);
-    
-     mt_generator.seed(s*7);
-    vector<double> V(n);
-    iota(V.begin(), V.end(), 1);
-    shuffle(V.begin(), V.end(), mt_generator);
-    transform(V1_scaled.begin(), V1_scaled.end(), V.begin(),  V.begin(),multiplies<>() );
-    sort_special(V);
-    print_vector(V, "V", 2);
+    print_vector(V3, "V3", 2);
 
     return 0;
 }
