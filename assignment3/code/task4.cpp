@@ -13,6 +13,7 @@ TEST_CASE("add_edge valid"){
     G2.add_vertex('E');
     G2.add_vertex('F');
     REQUIRE(G2.add_edge(0, 1));
+    REQUIRE(G2.add_edge(1, 0));
     REQUIRE(G2.add_edge(1, 2));
     REQUIRE(G2.add_edge(2, 3));
     REQUIRE(G2.add_edge(3, 0));
@@ -20,7 +21,7 @@ TEST_CASE("add_edge valid"){
     REQUIRE(G2.add_edge(4, 5));
 }
 TEST_CASE("add_edge invalid"){
-    REQUIRE(!G2.add_edge(1, 0)); //An edge already exists.
+    REQUIRE(!G2.add_edge(0, 1)); //An edge already exists.
     REQUIRE(!G2.add_edge(1, 1)); //Vertex cannot have edge to itself.
     REQUIRE(!G2.add_edge(8, 0)); //Vertex index out of range.
     REQUIRE(!G2.add_edge(8, 10)); //Vertex index out of range.
@@ -28,10 +29,11 @@ TEST_CASE("add_edge invalid"){
 
 TEST_CASE("remove_edge valid"){
     REQUIRE(G2.remove_edge(1, 2));
-    REQUIRE(G2.remove_edge(0, 3));
+    REQUIRE(G2.remove_edge(3, 0));
 }
 TEST_CASE("remove_edge invalid"){
     REQUIRE(!G2.remove_edge(5, 0)); //Edge does not exist.
+    REQUIRE(!G2.remove_edge(0, 3));  //Unidirectional edge
     REQUIRE(!G2.remove_edge(1, 1)); //Vertex cannot have edge to itself.
     REQUIRE(!G2.remove_edge(8, 0)); //Vertex index out of range.
     REQUIRE(!G2.remove_edge(8, 10)); //Vertex index out of range.
@@ -47,15 +49,15 @@ TEST_CASE("add_vertex invalid"){
 
 TEST_CASE("get_neighbors valid") {
     REQUIRE(G2.get_neighbors(6).empty());
-    REQUIRE(G2.get_neighbors(3).size() == 2);
-    REQUIRE(G2.get_neighbors(4).size() == 2);
+    REQUIRE(G2.get_neighbors(3).size() == 1);
+    REQUIRE(G2.get_neighbors(4).size() == 1);
 
     G2.add_edge(4,2);
     G2.add_edge(4,0);
     G2.add_edge(4,7);
-    REQUIRE(G2.get_neighbors(4).size() == 5);
-    G2.remove_edge(7,4);
     REQUIRE(G2.get_neighbors(4).size() == 4);
+    G2.remove_edge(4,7);
+    REQUIRE(G2.get_neighbors(4).size() == 3);
 }
 TEST_CASE("get_neighbors invalid") {
     REQUIRE_THROWS_AS(G2.get_neighbors(10), std::out_of_range); //Vertex index out of range.
@@ -75,21 +77,22 @@ TEST_CASE("get_vertex invalid"){
 }
 
 TEST_CASE("has_edge valid"){
-    REQUIRE(G2.has_edge(0, 4));
+    REQUIRE(G2.has_edge(4, 0));
 }
 TEST_CASE("has_edge invalid"){
     REQUIRE(!G2.has_edge(7, 0));
+    REQUIRE(!G2.has_edge(0, 4)); //Unidirectional edge
     REQUIRE(!G2.has_edge(0, 0)); //Vertex cannot have edge to itself.
     REQUIRE(!G2.has_edge(1, 20)); //Vertex index out of range.
 }
 
 TEST_CASE("num_edges valid"){
-    REQUIRE(G2.num_edges() == 6);
+    REQUIRE(G2.num_edges() == 7);
     G2.add_edge(1,3);
     G2.add_edge(7,2);
-    REQUIRE(G2.num_edges() == 8);
+    REQUIRE(G2.num_edges() == 9);
     G2.remove_edge(7,2);
-    REQUIRE(G2.num_edges() == 7);
+    REQUIRE(G2.num_edges() == 8);
 }
 TEST_CASE("num_edges invalid"){
 }
