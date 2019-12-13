@@ -254,7 +254,7 @@ std::size_t Graph<VertexProp>::num_edges() const {
 
 template<typename VertexProp>
 std::size_t Graph<VertexProp>::capacity() const {
-    return 0;
+    return num_edges(); //unweight graph -> assume all edges weight the same (1)
 }
 
 template<typename VertexProp>
