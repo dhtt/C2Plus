@@ -9,7 +9,7 @@
 #include <stack>
 #include <queue>
 
-static void check_dup_ind(size_t v_idx1, size_t v_idx2){
+static void check_dup_ind(size_t v_idx1, size_t v_idx2){ //throw error when 2 given indexes are the same
     if (v_idx1 == v_idx2) throw std::invalid_argument("Please choose two different indexes");
 }
 
@@ -58,6 +58,8 @@ public:
     // returns the capacity
     std::size_t capacity() const;
 
+    // ===================================================Iterator======================================================
+    // ===================DFS iterator====================
     class dfs_iterator{
     public:
         VertexProp* it_;
@@ -79,11 +81,17 @@ public:
             return (it_ != other.it_);
         }
     };
+
+    // Find DFS path and store the path in dsf_path
     void dfs(std::vector<bool>& visited, size_t v_idx, std::vector<VertexProp>& path);
-    void find_dfs_path(size_t v_idx);
+    std::vector<VertexProp> find_dfs_path(size_t v_idx);
+
+    // Iterator begin and end
     dfs_iterator dfs_begin(size_t i);
     dfs_iterator dfs_end(size_t i);
 
+    // ===================BFS iterator====================
+    // BFS iterator
     class bfs_iterator{
     public:
         VertexProp* it_;
@@ -105,8 +113,12 @@ public:
             return (it_ != other.it_);
         }
     };
+
+    // Find BFS path and store the path in bsf_path
     void bfs(std::vector<bool>& visited, size_t v_idx, std::vector<VertexProp>& path);
-    void find_bfs_path(size_t v_idx);
+    std::vector<VertexProp> find_bfs_path(size_t v_idx);
+
+    // Iterator begin and end
     bfs_iterator bfs_begin(size_t i);
     bfs_iterator bfs_end(size_t i);
 
@@ -115,20 +127,17 @@ private:
     std::vector<std::list<std::size_t>> adj_list_;
     // stores the vertex properties
     std::vector<VertexProp> vertex_props_;
-    std::vector<VertexProp> dfs_path;
-    std::vector<VertexProp> bfs_path;
 };
 
 template<typename VertexProp>
-Graph<VertexProp>::Graph(std::size_t num_vertices) { //TODO examine
+Graph<VertexProp>::Graph(std::size_t num_vertices) {
     reserve(num_vertices);
 }
 
 template<typename VertexProp>
 std::size_t Graph<VertexProp>::add_vertex(VertexProp &&prop) {
     if (find(vertex_props_.begin(), vertex_props_.end(), prop) != vertex_props_.end()) throw std::invalid_argument("This vertex is already added.");
-    //TODO check capacity?
-    //==============================================
+
     vertex_props_.push_back(prop);
     adj_list_.resize(vertex_props_.size());
     return vertex_props_.size()-1;
@@ -150,9 +159,8 @@ bool Graph<VertexProp>::add_edge(const std::size_t v_idx1, const std::size_t v_i
         return false;
     }
 
-    if (!has_edge(v_idx1, v_idx2)){
-        adj_list_[v_idx1].push_back(v_idx2);
-        adj_list_[v_idx2].push_back(v_idx1);
+    if (!has_edge(v_idx1, v_idx2)){ //add edge if there is no edge
+        adj_list_[v_idx1].push_back(v_idx2); //directed graph: unidirectional edge only
         return true;
     }
     else {
@@ -177,9 +185,8 @@ bool Graph<VertexProp>::remove_edge(std::size_t v_idx1, std::size_t v_idx2) {
         return false;
     }
 
-    if (has_edge(v_idx1, v_idx2)) { //remove if there is an edge
-        adj_list_[v_idx1].remove(v_idx2);
-        adj_list_[v_idx2].remove(v_idx1);
+    if (has_edge(v_idx1, v_idx2)) { //remove edge if there is an edge
+        adj_list_[v_idx1].remove(v_idx2); //directed graph: unidirectional edge
         return true;
     }
     else {
@@ -195,7 +202,7 @@ const std::list<std::size_t> &Graph<VertexProp>::get_neighbors(const std::size_t
 }
 
 template<typename VertexProp>
-void Graph<VertexProp>::reserve(const std::size_t size) { //TODO reserve adj_list[i] size?
+void Graph<VertexProp>::reserve(const std::size_t size) {
     adj_list_.reserve(size);
     vertex_props_.reserve(size);
 }
@@ -242,7 +249,7 @@ std::size_t Graph<VertexProp>::num_edges() const {
     for (auto vertex:adj_list_){
         n_edges += vertex.size();
     }
-    return n_edges/2;
+    return n_edges;
 }
 
 template<typename VertexProp>
@@ -253,74 +260,79 @@ std::size_t Graph<VertexProp>::capacity() const {
 template<typename VertexProp>
 void Graph<VertexProp>::dfs(std::vector<bool> &visited, size_t v_idx, std::vector<VertexProp> &path) {
     std::stack<size_t> v_stack;
-    v_stack.push(v_idx);
-    while (!v_stack.empty()) {
-        v_idx = v_stack.top();
+    v_stack.push(v_idx); //push current vertex into stack
+    while (!v_stack.empty()) { //while there are still vertex to be examined
+        v_idx = v_stack.top(); //get the last added vertex out of stack
         v_stack.pop();
-        if (!visited[v_idx]) {
+        if (!visited[v_idx]) { //if this vertex is not visited then mark visit and include it in DFS_path
             visited[v_idx] = true;
             if (find(path.begin(), path.end(), vertex_props_[v_idx]) == path.end()) path.push_back(vertex_props_[v_idx]);
         }
-        for (auto i = adj_list_[v_idx].begin(); i != adj_list_[v_idx].end(); ++i){
+        for (auto i = adj_list_[v_idx].begin(); i != adj_list_[v_idx].end(); ++i){ //push all neighbor of this vertex into stack
             if (!visited[*i]) v_stack.push(*i);
         }
     }
 }
 
 template<typename VertexProp>
-void Graph<VertexProp>::find_dfs_path(size_t v_idx) {
-    std::vector<bool> visited(num_vertices(), false);
-    for (size_t i = v_idx; i < num_vertices(); i++){
+std::vector<VertexProp> Graph<VertexProp>::find_dfs_path(size_t v_idx) {
+    std::vector<bool> visited(num_vertices(), false); // at first all vertexes are not visited
+    std::vector<VertexProp> dfs_path;
+    for (size_t i = v_idx; i < num_vertices(); i++){ // traverse through all nodes
         if (!visited[i]) dfs(visited, i, dfs_path);
     }
+    return dfs_path;
 }
 
 template<typename VertexProp>
 typename Graph<VertexProp>::dfs_iterator Graph<VertexProp>::dfs_begin(size_t i) {
-    if (dfs_path.empty()) find_dfs_path(i);
+    std::vector<VertexProp> dfs_path = find_dfs_path(i);
     return dfs_iterator(dfs_path.begin());
 }
 
 template<typename VertexProp>
 typename Graph<VertexProp>::dfs_iterator Graph<VertexProp>::dfs_end(size_t i) {
-    if (dfs_path.empty()) find_dfs_path(i);
+    std::vector<VertexProp> dfs_path = find_dfs_path(i);
     return dfs_iterator(dfs_path.end());
 }
+
 
 template<typename VertexProp>
 void Graph<VertexProp>::bfs(std::vector<bool> &visited, size_t v_idx, std::vector<VertexProp> &path) {
     std::queue<size_t> v_queue;
-    v_queue.push(v_idx);
-    while (!v_queue.empty()) {
-        v_idx = v_queue.front();
+    v_queue.push(v_idx); //push current vertex into queue
+    while (!v_queue.empty()) { //while there are still vertex to be examined
+        v_idx = v_queue.front(); //get the first added vertex out of queue
         v_queue.pop();
-        if (!visited[v_idx]) {
+        if (!visited[v_idx]) { //if this vertex is not visited then mark visit and include it in BFS_path
             visited[v_idx] = true;
             if (find(path.begin(), path.end(), vertex_props_[v_idx]) == path.end()) path.push_back(vertex_props_[v_idx]);
         }
-        for (auto i = adj_list_[v_idx].begin(); i != adj_list_[v_idx].end(); ++i){
+        for (auto i = adj_list_[v_idx].begin(); i != adj_list_[v_idx].end(); ++i){ //push all neighbor of this vertex into queue
             if (!visited[*i]) v_queue.push(*i);
         }
     }
 }
 
 template<typename VertexProp>
-void Graph<VertexProp>::find_bfs_path(size_t v_idx) {
-    std::vector<bool> visited(num_vertices(), false);
-    for (size_t i = v_idx; i < num_vertices(); i++){
+std::vector<VertexProp> Graph<VertexProp>::find_bfs_path(size_t v_idx) {
+    std::vector<bool> visited(num_vertices(), false); // at first all vertexes are not visited
+    std::vector<VertexProp> bfs_path;
+    for (size_t i = v_idx; i < num_vertices(); i++){ // traverse through all nodes
         if (!visited[i]) bfs(visited, i, bfs_path);
     }
+    return bfs_path;
 }
 
 template<typename VertexProp>
 typename Graph<VertexProp>::bfs_iterator Graph<VertexProp>::bfs_begin(size_t i) {
-    if (bfs_path.empty()) find_bfs_path(i);
+    std::vector<VertexProp> bfs_path = find_bfs_path(i);
     return bfs_iterator(bfs_path.begin());
 }
 
 template<typename VertexProp>
 typename Graph<VertexProp>::bfs_iterator Graph<VertexProp>::bfs_end(size_t i) {
-    if (bfs_path.empty()) find_bfs_path(i);
+    std::vector<VertexProp> bfs_path = find_bfs_path(i);
     return bfs_iterator(bfs_path.end());
 }
 
