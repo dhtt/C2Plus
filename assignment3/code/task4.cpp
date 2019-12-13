@@ -95,6 +95,7 @@ TEST_CASE("num_edges valid"){
     REQUIRE(G2.num_edges() == 8);
 }
 TEST_CASE("num_edges invalid"){
+    REQUIRE(G2.num_edges() != 10);
 }
 
 TEST_CASE("num_vertices valid"){
@@ -104,4 +105,5 @@ TEST_CASE("num_vertices valid"){
     REQUIRE(G2.num_vertices() == 10);
 }
 TEST_CASE("num_vertices invalid"){
+    REQUIRE(G2.num_vertices() != 13);
 }
