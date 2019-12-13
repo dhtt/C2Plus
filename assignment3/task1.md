@@ -33,16 +33,20 @@ template <typename U> class C { TYPE<U> example_var; }
     When we use push_back, erase or insert on an vector, its size changes and as vector can be described as linear, the elements inside are moved as the result of squeezing in a new element (like frameshift point mutation on a gene). Meanwhile, the iterator keeps pointing to the same address and thus would return another values or arbitrary values if the data are erased. 
     
 **5.  Which container would you choose and why if**
-a) you need to do sorted traversal and no duplicates are allowed (0.5 P.)
+*a) you need to do sorted traversal and no duplicates are allowed (0.5 P.)*
+
 Set: Sets allow no duplicated keys and are ordered as they are sorted by keys. 
 
-b) the order is not important and no duplicates are allowed (0.5 P.)
+*b) the order is not important and no duplicates are allowed (0.5 P.)*
+
 Unordered_set: Unordered_sets allow only unique keys and are hashed by keys so they are not ordered.
         
-c) you only need to add elements at the end and want fast traversal (0.5 P.)
+*c) you only need to add elements at the end and want fast traversal (0.5 P.)*
+
 Vector: Vector is a sequence container that can grow, which is perfect for adding more elements. For fast traversal one can choose between iterator, [] or at(), which are convenient and fast.
         
-d) you need to provide a dictionary that can associate multiple values with the same key (0.5 P.)
+*d) you need to provide a dictionary that can associate multiple values with the same key (0.5 P.)*
+
 Map: Maps store the key and values associated to it like a dictionary. To store multiple values, the value type could be pair, vector, etc depending on personal usage. 
 
 **6. How does an STL algorithm usually indicate "not found" or "failure"? (0.5 P.)**
