@@ -9,19 +9,22 @@ using namespace std;
 static double get_mean(vector<double> V){
     return accumulate(V.begin(), V.end(), 0.0)/V.size();
 }
+
 static double get_sd(vector<double> V){
     vector<double> mean_diff(V.size());
     double mean = get_mean(V);
     transform(V.begin(), V.end(), mean_diff.begin(), [mean](double d){ return d - mean;});
-    double square_sum = std::inner_product(mean_diff.begin(), mean_diff.end(), mean_diff.begin(), 0.0); //TODO check
-    return sqrt(square_sum / V.size());
+    double square_sum = std::inner_product(mean_diff.begin(), mean_diff.end(), mean_diff.begin(), 0.0);
+    return sqrt(square_sum / (V.size()-1));
 }
+
 static vector<double> scale_vector(vector<double> V){
     vector<double> V1_scaled(V.size());
     transform(V.begin(), V.end(), V1_scaled.begin(), [](double d){ return log2(abs(d) + 1);});
     return V1_scaled;
 }
-void print_vector(vector<double> V, const string& V_name, int print_type){ //print 2 first vectors
+
+static void print_vector(vector<double> V, const string& V_name, int print_type){ //print 2 first vectors
     string separator = "";
     if (print_type == 1) {
         sort(V.rbegin(), V.rend());
@@ -44,15 +47,17 @@ void print_vector(vector<double> V, const string& V_name, int print_type){ //pri
         cout << endl;
     }
 }
+
 static double t_test(const vector<double>& V1_, const vector<double>& V2_){
     double mean1 = get_mean(V1_); double mean2 = get_mean(V2_);
     double sd1 = get_sd(V1_); double sd2 = get_sd(V2_);
     double n1 = V1_.size(); double n2 = V2_.size();
 
-    double sd_pooled = sqrt(((n1-1)*sd1*sd1 + (n2-1)*sd2*sd2)/(n1+n2-2));//TODO: check calculation
+    double sd_pooled = sqrt(((n1-1)*sd1*sd1 + (n2-1)*sd2*sd2)/(n1+n2-2));
     double t_score = (mean1 - mean2)/(sd_pooled*sqrt(1/n1 + 1/n2));
     return t_score;
 }
+
 static vector<double> generate_seqvector(unsigned vec_size, unsigned seed){
     mt19937_64 mt_generator(seed);
     vector<double> V(vec_size);
@@ -72,30 +77,26 @@ static void sort_special(vector<double>& V){
     sort(V.begin(), it, [](double d1, double d2){ return d1> d2; }); //sort even part in descending order
 }
 
-int main(int argc, char* argv[]) {//TODO add exit error
-//    if (argc != 5) {
-//        printf("Please give 5 argument: n, m, s (unsigned int), p (double) and k (unsigned int).\n");
-//        return EXIT_FAILURE;
-//    }
-//
-//    unsigned n = static_cast<unsigned int>(atoi(argv[1]));
-//    unsigned m = static_cast<unsigned int>(atoi(argv[2]));
-//    unsigned s = static_cast<unsigned int>(atoi(argv[3]));
-//    double p = atoi(argv[4]);
-//    unsigned k = static_cast<unsigned int>(atoi(argv[5]));
-    unsigned n = 5;
-    unsigned m = 8;
-    unsigned s = 42;
-    double p = 0.5;
-    unsigned k = 10;
+int main(int argc, char* argv[]) {
+    if (argc != 6) {
+        printf("Please give 5 argument: n, m, s (unsigned int), p (double) and k (unsigned int).\n");
+        exit(1);
+    }
 
-    negative_binomial_distribution<int> distribution(k, p); //TODO check if use another
-    mt19937_64 mt_generator1 (s); mt19937_64 mt_generator2 (s*2);
-    auto gen1 = [&distribution, &mt_generator1](){return distribution(mt_generator1);};
-    auto gen2 = [&distribution, &mt_generator2](){return distribution(mt_generator2);};
+    unsigned n = static_cast<unsigned int>(atoi(argv[1]));
+    unsigned m = static_cast<unsigned int>(atoi(argv[2]));
+    unsigned s = static_cast<unsigned int>(atoi(argv[3]));
+    double p = strtod(argv[4], nullptr);
+    unsigned k = static_cast<unsigned int>(atoi(argv[5]));
+    negative_binomial_distribution<int> distribution1(k, p);
+    negative_binomial_distribution<int> distribution2(k, p);
+    mt19937_64 mt_generator(s);
+    auto gen1 = [&distribution1, &mt_generator](){return distribution1(mt_generator);};
+    auto gen2 = [&distribution2, &mt_generator](){return distribution2(mt_generator);};
 
     vector<double> V1(n);
     generate(V1.begin(), V1.end(), gen1);
+    mt_generator.seed(s*2);
     vector<double> V2(m);
     generate(V2.begin(), V2.end(), gen2);
 
