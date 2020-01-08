@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 static int min_switch(vector<bool> station, vector<bool> &beaming_cities, vector<size_t> &enabled_station, size_t radius, size_t& idx){
-    if ((find(station.begin(), station.begin()+radius, 1) == station.begin() + radius) || (find(station.end()-radius, station.end() + radius, 1) == station.end()))
-        return -1; //if first or last beaming station is > rdius distance away from the beginning or end, return -1
+    if ((find(station.begin(), station.begin()+radius, true) == station.begin() + radius) || (find(station.end()-radius, station.end() + radius, true) == station.end())){
+        return -1; //if first or last beaming station is > radius distance away from the beginning or end, return -1
+    }
 
     if (find(enabled_station.begin(), enabled_station.end(), idx) != enabled_station.end()){// if the beaming station is already enabled (== there is not beaming station in range 2*k-1 from the current station)
         return -1;

@@ -1,4 +1,6 @@
 #include <vector>
+#include <algorithm>
+#include <stdlib.h>
 #include "munkres_algorithm.hpp"
 
 static void substract_minrow(Matrix<int>& mat){
