@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="assignment4" targetName="task5" />
+      <config projectName="assignment4" targetName="task4" />
+      <config projectName="assignment4" targetName="task3" />
+      <config projectName="assignment4" targetName="task2" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a664a3b1-5d15-4dfd-b8bb-64c0ec3cd191" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ProjectId" id="1VTjpQkQhDEyBjiEcvCnECX1v4V" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="ObjectiveC" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RunManager" selected="CMake Application.task2">
+    <configuration name="task2" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="assignment4" TARGET_NAME="task2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="assignment4" RUN_TARGET_NAME="task2">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="task3" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="assignment4" TARGET_NAME="task3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="assignment4" RUN_TARGET_NAME="task3">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="task4" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="assignment4" TARGET_NAME="task4" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="assignment4" RUN_TARGET_NAME="task4">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="task5" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="assignment4" TARGET_NAME="task5" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="assignment4" RUN_TARGET_NAME="task5">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.task2" />
+      <item itemvalue="CMake Application.task3" />
+      <item itemvalue="CMake Application.task4" />
+      <item itemvalue="CMake Application.task5" />
+    </list>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a664a3b1-5d15-4dfd-b8bb-64c0ec3cd191" name="Default Changelist" comment="" />
+      <created>1577284161978</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1577284161978</updated>
+      <workItem from="1577284165872" duration="21238000" />
+      <workItem from="1577737874118" duration="20718000" />
+      <workItem from="1577907864587" duration="209000" />
+      <workItem from="1578001247007" duration="4953000" />
+      <workItem from="1578240981719" duration="957000" />
+      <workItem from="1578244152043" duration="365000" />
+      <workItem from="1578244649163" duration="185000" />
+      <workItem from="1578244948029" duration="130000" />
+      <workItem from="1578245360230" duration="668000" />
+      <workItem from="1578389284900" duration="23862000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1398" height="210" key="GridCell.Tab.0.bottom" timestamp="1578502143503">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="210" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1578502143503" />
+    <state width="1398" height="246" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1578491288319" />
+    <state width="1398" height="210" key="GridCell.Tab.0.center" timestamp="1578502143502">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="210" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1578502143502" />
+    <state width="1398" height="246" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1578491288318" />
+    <state width="1398" height="210" key="GridCell.Tab.0.left" timestamp="1578502143501">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="210" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1578502143501" />
+    <state width="1398" height="246" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1578491288317" />
+    <state width="1398" height="210" key="GridCell.Tab.0.right" timestamp="1578502143502">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="210" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1578502143502" />
+    <state width="1398" height="246" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1578491288318" />
+    <state x="374" y="280" key="com.intellij.ide.util.TipDialog" timestamp="1578389284646">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="374" y="280" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1578389284646" />
+    <state x="374" y="296" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1578245362551" />
+  </component>
+</project>
