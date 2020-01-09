@@ -21,7 +21,10 @@ static int min_switch(vector<bool> station, vector<bool> &beaming_cities, vector
                 if (station[idx]){ //if there is a beaming station in current city
                     replace(beaming_cities.begin() + idx - radius, beaming_cities.begin() + idx + radius, false, true); //enable the beaming station by changing beaming status of all cities within radius to true
                     enabled_station.push_back(idx); //store the enabled beaming station
-                    idx = idx + 2*radius - 1; //examine the next beaming station that is 2*k-1 unit away from current station to minimize overlapping
+                    if (idx + 2*radius < station.size()){//examine the next beaming station that is 2*k-1 unit away from current station to minimize overlapping
+                        idx = idx + 2*radius - 1;
+                    }
+                    else idx = station.size() - 1;
                 }
                 else { //if there is no beaming station in current city -> check preceding city
                     --idx;
@@ -34,7 +37,7 @@ static int min_switch(vector<bool> station, vector<bool> &beaming_cities, vector
         if (find(station.begin(), station.end(), true) != station.end()) {
             size_t found_idx = distance(station.begin(), find(station.begin(), station.end(), true));
             enabled_station.push_back(found_idx);
-            return enabled_station.size();
+            return 0;
         }
         else return -1;
     }
@@ -74,8 +77,9 @@ int main(int argc, const char* argv[]) {
     vector<size_t> enabled_station;
     size_t index; //start examining the first station at position k-1
     if (k - 1 < n) index = k - 1; else index = n - 1;
-    if (min_switch(beaming_stations, beaming_cities, enabled_station, k, index) == -1) cout << -1;
-    else cout << enabled_station.size();
+    int min_result = min_switch(beaming_stations, beaming_cities, enabled_station, k, index);
+    if (min_result == 0) cout << enabled_station.size() << endl;
+    else cout << -1 << endl;
 
     return 0;
 }
