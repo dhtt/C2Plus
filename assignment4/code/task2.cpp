@@ -31,24 +31,30 @@ static int min_switch(vector<bool> station, vector<bool> &beaming_cities, vector
 }
 
 int main(int argc, const char* argv[]) {
-    size_t n; size_t k;
     vector<bool> beaming_stations; bool station;
     string line1; string line2;
     getline(cin, line1); getline(cin, line2);
     istringstream iss1(line1); istringstream iss2(line2);
-    iss1 >> n >> k;
+
+    size_t a; vector<size_t> first_line;
+    while (iss1 >> a){
+        first_line.push_back(a);
+    }
+    if (first_line.size() != 2){
+        cerr << "Please check the first line of your input.\n";
+        exit(1);
+    }
+    size_t n = first_line[0];
+    size_t k = first_line[1];
+
     while (iss2 >> station){
         beaming_stations.push_back(station);
     }
     if (beaming_stations.size() != n){
-        cerr << "Please give n cities.\n";
-        throw Invalid{};
+        cerr << "Please check the second line of your input.\n";
+        exit(1);
     }
-//    cin >> n >> k;
-//    for (size_t i = 0; i < n; ++i){
-//        cin >> station;
-//        beaming_stations.push_back(station);
-//    }
+
     vector<size_t> result;
     vector<bool> beaming_cities(n, false);
     vector<size_t> enabled_station;
