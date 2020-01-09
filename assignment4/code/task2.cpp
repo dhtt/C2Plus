@@ -60,15 +60,12 @@ int main(int argc, const char* argv[]) {
     }
     size_t n = first_line[0];
     size_t k = first_line[1];
-    cout << n << "\t" << k << endl;
 
     while (iss2 >> station){
         beaming_stations.push_back(station);
-        cout << station << "\t";
     }
-    cout <<endl;
     if (beaming_stations.size() != n){
-        cerr << "Please check the second line of your input: " << beaming_stations.size() << endl;
+        cerr << "Please check the second line of your input" << endl;
         exit(1);
     }
 
@@ -82,4 +79,3 @@ int main(int argc, const char* argv[]) {
 
     return 0;
 }
-
