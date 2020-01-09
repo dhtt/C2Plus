@@ -6,7 +6,6 @@
 using namespace std;
 
 class Invalid{};
-
 static int min_switch(vector<bool> station, vector<bool> &beaming_cities, vector<size_t> &enabled_station, size_t radius, size_t& idx){
     if ((find(station.begin(), station.begin()+radius, true) == station.begin() + radius) || (find(station.end()-radius, station.end() + radius, true) == station.end())){
         return -1; //if first or last beaming station is > radius distance away from the beginning or end, return -1
@@ -38,8 +37,7 @@ int main(int argc, const char* argv[]) {
     getline(cin, line1); getline(cin, line2);
     istringstream iss1(line1); istringstream iss2(line2);
     iss1 >> n >> k;
-    for (size_t i = 0; i < n; ++i){
-        iss2 >> station;
+    while (iss2 >> station){
         beaming_stations.push_back(station);
     }
     if (beaming_stations.size() != n){
@@ -54,7 +52,7 @@ int main(int argc, const char* argv[]) {
     vector<size_t> result;
     vector<bool> beaming_cities(n, false);
     vector<size_t> enabled_station;
-    size_t index = 0 + k - 1; //start examining the first station at position k-1
+    size_t index = k - 1; //start examining the first station at position k-1
     if (min_switch(beaming_stations, beaming_cities, enabled_station, k, index) == -1) cout << -1;
     else cout << enabled_station.size();
 
