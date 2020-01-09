@@ -1,6 +1,7 @@
 #include <vector>
 #include <algorithm>
 #include <stdlib.h>
+#include <iostream>
 #include "munkres_algorithm.hpp"
 
 static void substract_minrow(Matrix<int>& mat){
@@ -204,6 +205,11 @@ static void step_4(int& step, Matrix<int>& mat, std::vector<bool>& row_cover, st
 }
 
 Matrix<int> run_munkres_algorithm(Matrix<int> m) {
+    if (m.nrows() != m.ncols()){
+        std::cerr << "Matrix has to be square." << std::endl;
+        exit(1);
+    }
+    
     Matrix<int> mat(m);
     Matrix<int> mask(mat.nrows(), mat.ncols(), 0); //mask stores star and prime zero
     std::vector<bool> row_cover(mat.nrows(), false); //row_cover stores which row is covered
