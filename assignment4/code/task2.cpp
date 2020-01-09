@@ -1,8 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
+
+class Invalid{};
 
 static int min_switch(vector<bool> station, vector<bool> &beaming_cities, vector<size_t> &enabled_station, size_t radius, size_t& idx){
     if ((find(station.begin(), station.begin()+radius, true) == station.begin() + radius) || (find(station.end()-radius, station.end() + radius, true) == station.end())){
@@ -31,11 +34,23 @@ static int min_switch(vector<bool> station, vector<bool> &beaming_cities, vector
 int main(int argc, const char* argv[]) {
     size_t n; size_t k;
     vector<bool> beaming_stations; bool station;
-    cin >> n >> k;
+    string line1; string line2;
+    getline(cin, line1); getline(cin, line2);
+    istringstream iss1(line1); istringstream iss2(line2);
+    iss1 >> n >> k;
     for (size_t i = 0; i < n; ++i){
-        cin >> station;
+        iss2 >> station;
         beaming_stations.push_back(station);
     }
+    if (beaming_stations.size() != n){
+        cerr << "Please give n cities.\n";
+        throw Invalid{};
+    }
+//    cin >> n >> k;
+//    for (size_t i = 0; i < n; ++i){
+//        cin >> station;
+//        beaming_stations.push_back(station);
+//    }
     vector<size_t> result;
     vector<bool> beaming_cities(n, false);
     vector<size_t> enabled_station;
