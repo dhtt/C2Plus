@@ -4,6 +4,8 @@
 #include <iostream>
 #include "munkres_algorithm.hpp"
 
+class Invalid {};
+
 static void substract_minrow(Matrix<int>& mat){
     for (size_t r = 0; r < mat.nrows(); ++r){
         std::vector<int> row;
@@ -207,7 +209,7 @@ static void step_4(int& step, Matrix<int>& mat, std::vector<bool>& row_cover, st
 Matrix<int> run_munkres_algorithm(Matrix<int> m) {
     if (m.nrows() != m.ncols()){
         std::cerr << "Matrix has to be square." << std::endl;
-        exit(1);
+        throw Invalid{};
     }
     
     Matrix<int> mat(m);
