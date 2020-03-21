@@ -62,10 +62,9 @@ endif()
 
 # add the executables
 # the headers are not necessary, but some IDEs only show them if we add them here
-add_executable(task2 task2.cpp)
-add_executable(task3 task3.cpp munkres_algorithm.cpp munkres_algorithm.hpp matrix.hpp)
-add_executable(task4 task4.cpp bloom_filter.hpp)
-add_executable(task5 task5.cpp)
+add_executable(minimum_stations minimum_stations.cpp)
+add_executable(Munkres_assignment_solver Munkres_assignment_solver.cpp munkres_algorithm.cpp munkres_algorithm.hpp matrix.hpp)
+add_executable(Bron-Kerbosch_maximal_cliques_generator Bron-Kerbosch_maximal_cliques_generator.cpp)
 
 # link with libraries
 if(NOT WIN32)
@@ -73,9 +72,8 @@ if(NOT WIN32)
         set(CXX_ABI c++abi)
     endif()
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        target_link_libraries(task2 ${CXX_ABI})
-        target_link_libraries(task3 ${CXX_ABI})
-        target_link_libraries(task4 ${CXX_ABI})
-        target_link_libraries(task5 ${CXX_ABI})
+        target_link_libraries(minimum_stations ${CXX_ABI})
+        target_link_libraries(Munkres_assignment_solver ${CXX_ABI})
+        target_link_libraries(Bron-Kerbosch_maximal_cliques_generator ${CXX_ABI})
    endif()
 endif()
