@@ -28,7 +28,7 @@ chr2 1300 10800 cluster=3
 ==========================================
 
 ### 2. Nussinov_secondary_structure_finder
-A program that takes one RNA sequence as argument and outputs the score of the best secondary structure it could form (i.e. the maximum number of base pairs for this sequence) using Nussinov algorithm (https://math.mit.edu/classes/18.417/Slides/rna-prediction-nussinov.pdf) and dynamic programming. Secondary structures should be output in dot-bracket notation.
+A program that takes one RNA sequence as argument and outputs the score of the best secondary structure it could form (i.e. the maximum number of base pairs for this sequence) using [Nussinov algorithm](https://math.mit.edu/classes/18.417/Slides/rna-prediction-nussinov.pdf) and dynamic programming. Secondary structures should be output in dot-bracket notation.
 
 ==========================================
 
