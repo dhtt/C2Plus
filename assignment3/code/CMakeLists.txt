@@ -62,10 +62,9 @@ endif()
 
 # add the executables
 # the headers are not necessary, but some IDEs only show them if we add them here
-add_executable(task2 task2.cpp)
-add_executable(task3 task3.cpp cxxopts.hpp)
-add_executable(task4 task4.cpp graph.hpp)
-add_executable(task5 task5.cpp graph.hpp)
+add_executable(t_statistics_calculator t_statistics_calculator.cpp)
+add_executable(lightweight_grep lightweight_grep.cpp cxxopts.hpp)
+add_executable(graph_test graph_test.cpp graph.hpp)
 
 # link with libraries
 if(NOT WIN32)
@@ -73,9 +72,8 @@ if(NOT WIN32)
         set(CXX_ABI c++abi)
     endif()
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        target_link_libraries(task2 ${CXX_ABI})
-        target_link_libraries(task3 ${CXX_ABI})
-        target_link_libraries(task4 ${CXX_ABI})
-        target_link_libraries(task5 ${CXX_ABI})
+        target_link_libraries(t_statistics_calculator ${CXX_ABI})
+        target_link_libraries(lightweight_grep ${CXX_ABI})
+        target_link_libraries(graph_test ${CXX_ABI})
    endif()
 endif()
