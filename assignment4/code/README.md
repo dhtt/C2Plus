@@ -1,5 +1,5 @@
 ## Assignment project 4
-### 1. Munkres_assignment_solver
+### 1. [Munkres_assignment_solver](munkres_algorithm.cpp)
 A program that takes a matrix input and apply [Munkres algorithm](https://www.sciencedirect.com/science/article/abs/pii/S026288560800084X) to solve the [assignment problem](https://en.wikipedia.org/wiki/Assignment_problem). 
 
 ==========================================
@@ -22,7 +22,7 @@ A program that takes a matrix input and apply [Munkres algorithm](https://www.sc
 
 ==========================================
 
-### 2. Bron-Kerbosch_maximal_cliques_generator
+### 2. [Bron-Kerbosch_maximal_cliques_generator](Bron-Kerbosch_maximal_cliques_generator.cpp)
 A program that takes an adjacency matrix on the standard input and outputs all maximal cliques on the standard output using the [Bron-Kerbosch algorithm](https://en.wikipedia.org/wiki/Bron–Kerbosch_algorithm) to detect the maximal cliques. 
 
 ==========================================
