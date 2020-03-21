@@ -1,8 +1,8 @@
 ## Assignment project 3
-### 1. t_statistics_calculator
+### 1. [t_statistics_calculator](assignment3/code/t_statistics_calculator.cpp)
 Calculate the t stastistic for independent two-sample t-test with equal sample sizes 
 
-### 2. lightweight_grep
+### 2. [lightweight_grep](assignment3/code/lightweight_grep.cpp)
 A lightweight version of grep that allows to find arbitrary user-defined text-patterns in a given set of files with several options to specify the strictness of matching and the output formatting. 
 
 ==========================================
@@ -23,7 +23,7 @@ _*print line number where a match is found_: ./lightweight_grep -n pattern list 
 
 ==========================================
 
-### 3. graph_maker
+### 3. [graph_maker](assignment3/code/graph.hpp)
 An unweighted directed Graph class stores its vertices in an adjacency list. The following properties are implemented:
 
 1. dfs_iterator dfs_begin(std::size_t vertex_idx)
