@@ -1,5 +1,5 @@
 ## Assignment project 2
-### 1. [gene_cluster_finder](assignment2/code/gene_cluster_finder.cpp)
+### 1. [gene_cluster_finder](gene_cluster_finder.cpp)
 A program computes gene clusters in which each gene is at most at distance d of at least one other gene of the cluster and all being located on the same chromosome. The distance between two genes is determined by their middle positions.
 The genes will be passed as tab-separated text file as first argument. The allowed distance will be passed as second argument and the output file as third argument. The input file consists of three columns: chromosome start stop, start and stop represent a closed interval and begin at one. The clusters should be sorted in ascending coordinate order.
 
@@ -27,7 +27,7 @@ chr2 1300 10800 cluster=3
 
 ==========================================
 
-### 2. [Nussinov_secondary_structure_finder](assignment2/code/Nussinov_secondary_structure_finder.cpp)
+### 2. [Nussinov_secondary_structure_finder](Nussinov_secondary_structure_finder.cpp)
 A program that takes one RNA sequence as argument and outputs the score of the best secondary structure it could form (i.e. the maximum number of base pairs for this sequence) using [Nussinov algorithm](https://math.mit.edu/classes/18.417/Slides/rna-prediction-nussinov.pdf) and dynamic programming. Secondary structures should be output in dot-bracket notation.
 
 ==========================================
@@ -42,7 +42,7 @@ _*Sample output_
 
 ==========================================
 
-### 3. [dynamic_dataframe](assignment2/code/dynamic_dataframe.cpp)
+### 3. [dynamic_dataframe](dynamic_dataframe.cpp)
 A class Dataframe that can manage a dynamic number of columns (of identical length), where each column has its own value type. The dataframe is capable of encapsulating any valid C++ type and contain heterogenous data types. The following properties are implemented:
 
 1. Dataframe(), default initialized.
