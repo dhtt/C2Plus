@@ -62,10 +62,9 @@ endif()
 
 # add the executables
 # the headers are not necessary, but some IDEs only show them if we add them here
-add_executable(task2 task2.cpp simple_matrix.cpp simple_matrix.hpp)
-add_executable(task3 task3.cpp)
-add_executable(task4 task4.cpp)
-add_executable(task5 task5.cpp dataframe.cpp dataframe.hpp col_type.hpp)
+add_executable(gene_cluster_finder gene_cluster_finder.cpp)
+add_executable(Nussinov_secondary_structure_finder Nussinov_secondary_structure_finder.cpp)
+add_executable(dynamic_dataframe dynamic_dataframe.cpp dataframe.cpp dataframe.hpp col_type.hpp)
 
 # link with libraries
 if(NOT WIN32)
@@ -74,8 +73,8 @@ if(NOT WIN32)
     endif()
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
         target_link_libraries(task2 ${CXX_ABI})
-        target_link_libraries(task3 ${CXX_ABI})
-        target_link_libraries(task4 ${CXX_ABI})
-        target_link_libraries(task5 ${CXX_ABI})
+        target_link_libraries(gene_cluster_finder ${CXX_ABI})
+        target_link_libraries(Nussinov_secondary_structure_finder ${CXX_ABI})
+        target_link_libraries(dynamic_dataframe ${CXX_ABI})
    endif()
 endif()
