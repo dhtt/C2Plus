@@ -1,5 +1,5 @@
 ## Assignment project 3
-### 1. [t_statistics_calculator](assignment3/code/t_statistics_calculator.cpp)
+### 1. [t_statistics_calculator](t_statistics_calculator.cpp)
 Calculate the t stastistic for independent two-sample t-test with equal sample sizes 
 
 ### 2. [lightweight_grep](assignment3/code/lightweight_grep.cpp)
