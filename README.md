@@ -1,5 +1,5 @@
 ## Introduction
-Here lie the programs I have written in the C++ programming course held by the *Chair for Clinical Bioinformatics* (University of Saarland) in winter semester of 2019. Only the codes that are helpful in certain contexts relevant to my Bioinformatics-oriented practices are reposited and are divided into 4 assignment projects. Follows is the list of topics which are found under each project. 
+The codes in this repository are contributed to the C++ programming course held by *Chair for Clinical Bioinformatics* (UdS) in winter semester, 2019. Only the problems relevant to my current Bioinformatics-oriented practices are reposited and distributed under 4 assignment projects. 
 
 ## List of topics
 ### [Assignment project 1](https://github.com/dhtt/C2Plus/tree/master/assignment1/code)
@@ -7,7 +7,7 @@ Here lie the programs I have written in the C++ programming course held by the *
 	 - binary_string_search 
 	 - FASTA_palindrome_finder
 	 
-
+	 
 ### [Assignment project 2](https://github.com/dhtt/C2Plus/tree/master/assignment2/code)
 	 - gene_cluster_finder
 	 - Nussinov_secondary_structure_finder
@@ -21,6 +21,6 @@ Here lie the programs I have written in the C++ programming course held by the *
 
 
 ### [Assignment project 4](https://github.com/dhtt/C2Plus/tree/master/assignment4/code)
-	 - minimum_stations
+	 - dynamic programming
 	 - Munkres_assignment_solver
 	 - Bron-Kerbosch_maximal_cliques_generator
